@@ -27,7 +27,7 @@ int max = 0;
 int main(int argc, char * const * argv) {
     /* Obtaining the number of processes from the command line */
     char * input = NULL;
-    int argument, start = 0, help, index; // variables for short arguments
+    int argument, start = 0, index; // variables for short arguments
     int n = 0; // number of processes to create
     while((argument = getopt (argc, argv, "n:h")) != -1)
     
@@ -42,7 +42,7 @@ int main(int argc, char * const * argv) {
             }
             break;
         case 'h':
-            help = 1;
+            print_help();
             break;
         case '?':
             if(optopt == 'n')
@@ -59,14 +59,10 @@ int main(int argc, char * const * argv) {
     for (index = optind; index < argc; index++)
         printf ("El argumento %s no es una opción válida \n", argv[index]);
     
-    if(help == 1) {
-        print_help();
-    }
-    
     if(start == 1) {
-        int state;
         pid_t pid;
-        proc_t * list = (proc_t *) malloc(sizeof(proc_t) * n);
+        proc_t * processes = (proc_t *) malloc(sizeof(proc_t) * n);
+        int state;
         int i = 0;
         while(i < n) {
             pid = fork();
@@ -80,7 +76,7 @@ int main(int argc, char * const * argv) {
             } else {
                 if (waitpid(pid, &state, 0) != -1) {
                     if (WIFEXITED(state)) {
-                        proc_t * proc = list + i;
+                        proc_t * proc = processes + i;
                         proc->pid = pid;
                         proc->average = WEXITSTATUS(state);
                         
@@ -92,9 +88,9 @@ int main(int argc, char * const * argv) {
             }
             i++;
         }
-        create_histogram(list, n);
-        print_table(list, n);
-        free_memory(list, n);
+        create_histogram(processes, n);
+        print_table(processes, n);
+        free_memory(processes, n);
     } 
     return 0;
 }
@@ -103,28 +99,28 @@ int get_average(int ppid, int pid) {
     return (ppid + pid) / 2;
 }
 
-void create_histogram(proc_t * list, int n) {
-    proc_t * aux = list;
-    proc_t * final = list + n;
+void create_histogram(proc_t * processes, int n) {
+    proc_t * p = processes;
+    proc_t * final = processes + n;
     int n_chars = 0;
     char * c;
-    for(; aux < final; ++aux) {
-        n_chars = (aux->average * H) / max;
-        aux->histogram = (char *) malloc(sizeof(char) * n_chars);
-        strcpy(aux->histogram, "*");
-        c = aux->histogram + 1;
-        for(; c < aux->histogram + n_chars; ++c) {
+    for(; p < final; ++p) {
+        n_chars = (p->average * H) / max;
+        p->histogram = (char *) malloc(sizeof(char) * n_chars);
+        strcpy(p->histogram, "*");
+        c = p->histogram + 1;
+        for(; c < p->histogram + n_chars; ++c) {
             strcpy(c, "*");
         }
     }
 }
 
-void print_table(proc_t * list, int n) {
-    proc_t * aux = list;
-    proc_t * final = list + n;
+void print_table(proc_t * processes, int n) {
+    proc_t * p = processes;
+    proc_t * final = processes + n;
     printf("\nPID Hijo\tPromedio\tHistograma\n");
-    for(; aux < final; ++aux) {
-        printf("%d\t\t %d\t\t%s\n", aux->pid, aux->average, aux->histogram);
+    for(; p < final; ++p) {
+        printf("%d\t\t %d\t\t%s\n", p->pid, p->average, p->histogram);
     }
 }
 
@@ -134,14 +130,14 @@ void print_help() {
     printf("\t-n : Crear n procesos indicados como valor entero\n\th : Ayuda\n");
 }
 
-void free_memory(proc_t * list, int n) {
-    proc_t * aux = list;
-    proc_t * final = list + n;
-    for(; aux < final; ++aux) {
-        aux->pid = 0;
-        aux->average = 0;
-        free(aux->histogram);
+void free_memory(proc_t * processes, int n) {
+    proc_t * p = processes;
+    proc_t * final = processes + n;
+    for(; p < final; ++p) {
+        p->pid = 0;
+        p->average = 0;
+        free(p->histogram);
     }    
-    free(list);
+    free(processes);
     printf("Memory freed correctly\n");
 }
