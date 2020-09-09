@@ -10,7 +10,7 @@
 
 typedef struct {
     int pid;
-    int average;
+    float average;
     char * histogram;
 } proc_t;
 
@@ -62,29 +62,41 @@ int main(int argc, char * const * argv) {
     if(start == 1) {
         pid_t pid;
         proc_t * processes = (proc_t *) malloc(sizeof(proc_t) * n);
-        int average;
-        float f_average;
+        
+        int state;
+        int fd[2];
+        pipe(fd);
         int i = 0;
+        int accum = i;
+        
         while(i < n) {
             pid = fork();
+            
             if(pid == -1) {
                 printf("Error. %d procesos hijos creados\n", i);
             } else if(pid == 0) { 
-                f_average = get_average(getppid(), getpid());
-                printf("Soy el proceso hijo con PID = %d, mi promedio es = %.2f\n", getpid(), f_average);
-                average = (int)f_average;
-                exit(average);
+                close(fd[0]);// Closing reading end
+                float average = get_average(getppid(), getpid());
+                printf("Soy el proceso hijo con PID = %d, mi promedio es = %.2f\n", getpid(), average);
+                int pid = getpid();
+                write(fd[1], &pid, sizeof(int));
+                write(fd[1], &average, sizeof(float));
+                close(fd[1]);
+                return((int)average);
             } else {
-                if (waitpid(pid, &average, 0) != -1) {
-                    if (WIFEXITED(average)) {
-                        proc_t * proc = processes + i;
-                        proc->pid = pid;
-                        proc->average = WEXITSTATUS(average);
-                        
-                        if(WEXITSTATUS(average) > max) 
-                            max = WEXITSTATUS(average);
-                        
-                    }
+                if (waitpid(pid, &state, 0) != -1) {
+                    wait(NULL);
+                    close(fd[1]); // Closing writing end;
+                    int pid; 
+                    float average;
+                    read(fd[0], &pid, sizeof(int));
+                    read(fd[0], &average, sizeof(float));
+                    proc_t * proc = processes + i;
+                    proc->pid = pid;
+                    proc->average = average;
+                    if(average > max)
+                        max = average;
+                    close(fd[0]);
                 }
             }
             i++;
@@ -106,7 +118,7 @@ void create_histogram(proc_t * processes, int n) {
     int n_chars = 0;
     char * c;
     for(; p < final; ++p) {
-        n_chars = (p->average * H) / max;
+        n_chars = ((int)p->average * H) / max;
         p->histogram = (char *) malloc(sizeof(char) * n_chars);
         strcpy(p->histogram, "*");
         c = p->histogram + 1;
@@ -121,9 +133,8 @@ void print_table(proc_t * processes, int n) {
     proc_t * final = processes + n;
     printf("\nPID Hijo\tPromedio\tHistograma\n");
     for(; p < final; ++p) {
-        printf("%d\t\t %d\t\t%s\n", p->pid, p->average, p->histogram);
+        printf("%d\t\t %.2f\t\t%s\n", p->pid, p->average, p->histogram);
     }
-    printf("\n");
 }
 
 void print_help() {
