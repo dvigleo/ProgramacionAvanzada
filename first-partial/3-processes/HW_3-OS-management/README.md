@@ -5,10 +5,7 @@
 
 Realice un programa en C donde simule el comportamiento del algoritmo de planificación por pandilla. El programa debe permitir al usuario entrar por teclado el número total de procesos a planificar, el tiempo de CPU que se requiere para cada uno, la relación que existe entre los procesos (grupos) y el número de CPUs. Los grupos de procesos deben ir planificándose según el criterio que Ud. defina (puede ser Round Robin, FIFO, etc.), garantizando siempre un máximo aprovechamiento de todas las CPUs.
 
-Nota: Para simular que un proceso consume tiempo de CPU, puede utilizar la función sleep()
-
-Favor de revisar el Capítulo 8. Multiprocesadores,  Sección 8.1.4. Calendarización de multiprocesadores, del libro Sistemas Operativos Modernos de Andrew S. Tanenbaum (Enlaces a un sitio externo.)
-
+*Nota*: Para simular que un proceso consume tiempo de CPU, puede utilizar la función sleep()
  
 
 ### Ejercicio 2.
