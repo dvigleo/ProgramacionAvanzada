@@ -8,9 +8,11 @@ Escriba un programa en C que genere dos procesos. El primer proceso lee números
 
 ## Ejercicio 3
 Modifique el ejercicio 1 para que el hijo no imprima el factorial, sino que en su lugar, utilizando otro pipe, se lo comunique al padre y sea este quien imprima los resultados.
+
 *Nota*: Recuerde que para la comunicación bidireccional debe utilizar dos pipes. 
 
 ## Ejercicio 4
 Resuelva el problema 1 utilizando FIFO, donde los procesos no tengan relación de parentesco. 
+
 *Nota*: Para lo anterior debe crear dos procesos diferentes: uno que escribe el número en
 el FIFO y otro que lo lee para calcular el factorial e imprimir el resultado. 
