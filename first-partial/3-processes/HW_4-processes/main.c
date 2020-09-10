@@ -28,7 +28,7 @@ int main(int argc, char * const * argv) {
     /* Obtaining the number of processes from the command line */
     char * input = NULL;
     int argument, start = 0, index; // variables for short arguments
-    int n = 0; // number of processes to create
+    int n = 0;
     while((argument = getopt (argc, argv, "n:h")) != -1)
     
     switch(argument) {
@@ -62,6 +62,7 @@ int main(int argc, char * const * argv) {
     if(start == 1) {
         pid_t pid;
         proc_t * processes = (proc_t *) malloc(sizeof(proc_t) * n);
+        proc_t * p = processes;
         int average;
         float f_average;
         int i = 0;
@@ -69,17 +70,17 @@ int main(int argc, char * const * argv) {
             pid = fork();
             if(pid == -1) {
                 printf("Error. %d procesos hijos creados\n", i);
+                exit(-1);
             } else if(pid == 0) { 
                 f_average = get_average(getppid(), getpid());
                 printf("Soy el proceso hijo con PID = %d, mi promedio es = %.2f\n", getpid(), f_average);
                 average = (int)f_average;
-                exit(average);
+                return f_average;
             } else {
                 if (waitpid(pid, &average, 0) != -1) {
                     if (WIFEXITED(average)) {
-                        proc_t * proc = processes + i;
-                        proc->pid = pid;
-                        proc->average = WEXITSTATUS(average);
+                        (p+i)->pid = pid;
+                        (p+i)->average = WEXITSTATUS(average);
                         
                         if(WEXITSTATUS(average) > max) 
                             max = WEXITSTATUS(average);
@@ -141,5 +142,5 @@ void free_memory(proc_t * processes, int n) {
         free(p->histogram);
     }    
     free(processes);
-    printf("Memory freed correctly\n");
+    // printf("Memory freed correctly\n");
 }
