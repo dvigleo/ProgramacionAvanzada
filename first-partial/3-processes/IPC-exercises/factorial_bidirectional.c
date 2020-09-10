@@ -3,8 +3,12 @@
     September 10, 2020
 
     Exercise 3: Complete
-    Modifique el ejercicio 1 para que el hijo no imprima el factorial, sino que en su lugar, utilizando otro pipe, se lo comunique al padre y sea este quien imprima los resultados. 
-    Nota: Recuerde que para la comunicación bidireccional debe utilizar dos pipes.
+    Modifique el ejercicio 1 para que el hijo no imprima el factorial, sino que
+    en su lugar, utilizando otro pipe, se lo comunique al padre y sea este
+    quien imprima los resultados.
+
+    Nota: Recuerde que para la comunicación bidireccional debe utilizar dos
+    pipes.
 
 */
 

@@ -3,7 +3,10 @@
     September 10, 2020
 
     Exercise 1: Complete
-    Escriba un programa en C que reciba por teclado números y cada vez que recibe un número, se lo envíe a un proceso hijo a través de un pipe para que este calcule e imprima el factorial de ese número. Solo debe existir un hijo que calcula. 
+    Escriba un programa en C que reciba por teclado números y cada vez que
+    recibe un número, se lo envíe a un proceso hijo a través de un pipe para
+    que este calcule e imprima el factorial de ese número. Solo debe existir un
+    hijo que calcula. 
 */
 
 #include <stdio.h>

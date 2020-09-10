@@ -3,8 +3,12 @@
     September 10, 2020
 
     Exercise 4: Unfinished
-    Resuelva el problema 1 utilizando FIFO, donde los procesos no tengan relación de parentesco 
-    Nota: Para lo anterior debe crear dos procesos diferentes: uno que escribe el número en el FIFO y otro que lo lee para calcular el factorial e imprimir el resultado
+    Resuelva el problema 1 utilizando FIFO, donde los procesos no tengan
+    relación de parentesco
+
+    Nota: Para lo anterior debe crear dos procesos diferentes: uno que escribe
+    el número en el FIFO y otro que lo lee para calcular el factorial e
+    imprimir el resultado
 */
 
 #include <stdio.h>

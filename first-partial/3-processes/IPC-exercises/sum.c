@@ -4,7 +4,11 @@
     September 10, 2020
 
     Exercise 2: Complete
-    Escriba un programa en C que genere dos procesos. El primer proceso lee números enteros del teclado y los envía a un pipe para que los lea el otro proceso. El segundo proceso recibirá los números del pipe sumándolos. Cuando se entre el número 0, el proceso hijo debe mostrar el resultado de la suma y ambos procesos deben terminar. 
+    Escriba un programa en C que genere dos procesos. El primer proceso lee
+    números enteros del teclado y los envía a un pipe para que los lea el otro
+    proceso. El segundo proceso recibirá los números del pipe sumándolos.
+    Cuando se entre el número 0, el proceso hijo debe mostrar el resultado de
+    la suma y ambos procesos deben terminar. 
 */
 
 
