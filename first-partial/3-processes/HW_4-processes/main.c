@@ -1,3 +1,11 @@
+/*
+    Alumno: Daniela Vignau León
+    Fecha: 10 de septiembre de 2020
+    Materia: Programación Avanzada
+    Profesor: Vicente Cubells
+    Tarea 4
+*/
+
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -25,9 +33,8 @@ void free_memory(proc_t *, int);
 int max = 0;
 
 int main(int argc, char * const * argv) {
-    /* Obtaining the number of processes from the command line */
     char * input = NULL;
-    int argument, start = 0, index; // variables for short arguments
+    int argument, start = 0, index;
     int n = 0;
     while((argument = getopt (argc, argv, "n:h")) != -1)
     
@@ -142,5 +149,4 @@ void free_memory(proc_t * processes, int n) {
         free(p->histogram);
     }    
     free(processes);
-    // printf("Memory freed correctly\n");
 }
