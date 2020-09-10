@@ -12,4 +12,4 @@ Realice un programa en C donde simule el comportamiento del algoritmo de planifi
 
 Escriba un programa en C que parta de un directorio dado y descienda por el árbol de archivos registrando los tamaños de todos los archivos que encuentre. Cuando termine, deberá imprimir un histograma de los tamaños de archivo, utilizando una anchura de urna especificada como parámetro ( por ejemplo, para un valor de urna de 1024, todos los archivos con tamaño entre 0 y 1023 se colocan en una urna, los de 1024 a 2047 en otra y así sucesivamente).
 
-Debe utilizar llamadas al sistema (system calls). Por favor, verifique las llamadas al sistema para manipulación de archivos y directorios que a aparecen en la última clase.
+Debe utilizar llamadas al sistema (system calls).
