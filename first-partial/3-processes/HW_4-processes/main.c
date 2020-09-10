@@ -91,7 +91,6 @@ int main(int argc, char * const * argv) {
                         
                         if(WEXITSTATUS(average) > max) 
                             max = WEXITSTATUS(average);
-                        
                     }
                 }
             }
