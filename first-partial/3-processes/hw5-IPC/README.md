@@ -7,7 +7,9 @@ Se quiere crear una red Token Ring formada por N procesos, donde el valor de n s
 
 Los procesos deben formar un anillo como el que se muestra en la figura.  
 
-![Token Ring | 20%](./images/fig1.jpg) 
+<p align="center">
+    <img src=./images/fig1.jpg>
+</p>
 
 Cada proceso en el anillo se enlaza de forma unidireccional con su antecesor y su sucesor mediante un pipe. 
 El proceso que crea el anillo genera un único carácter ('T') que hará de testigo.
