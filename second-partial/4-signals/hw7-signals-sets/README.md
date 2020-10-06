@@ -1,48 +1,15 @@
-# Actividad 6: Sockets y señales
-### Autores
-* [Daniela Vignau (A01021698)](https://github.com/dvigleo)
-* [Héctor Reyes (A01339607)](https://github.com/hreyesm)
-## Instrucciones de ejecución
-### 1. Abrir ventanas de terminal
-Abrir cinco ventanas de terminal (una correspondiente a la consola de control y cuatro a los semáforos) en el mismo directorio donde están almacenados los archivos que se encuentran en este repositorio.<br /><br />
-_Nota: Se recomienda colocar las cuatro ventanas para los semáforos en cada una de las esquinas de la pantalla._
-### 2. Compilar archivos
-Compilar ambos archivos de la siguiente manera:
-```c
-    gcc main.c -o console
-    gcc semaphore.c -o semaphore
-```
-### 3. Inicializar consola de control y semáforos
-<strong>Inicializar la consola de control</strong><br />
-La consola de control (servidor) debe ser el primer proceso en ejecutarse, ya que es necesario que espere a que los semáforos (clientes) terminen de conectarse a través del socket previo a mostrar su información.
-```c 
-    ./console 127.0.0.0.1
-```
-<strong>Inicializar el primer semáforo</strong><br />
-Dado que uno de los semáforos debe enviar la primera señal, la cual indicará a su vecino que cambie su estado de _RED_ a _GREEN_, debe agregarse el argumento _-f_ antes de la dirección IP.
-```c 
-    ./semaphore -f 127.0.0.0.1
-```
-<strong>Inicializar el resto de los semáforos</strong><br />
-De la misma forma en que se recomienda colocar los cuatro semáforos en cada una de las esquinas de la pantalla, se recomienda inicializar el resto de los semáforos en sentido horario.
-```c 
-    ./semaphore 127.0.0.0.1
-```
-
-### 4. Verificar que la conexión a la consola de control fue exitosa
-Si la conexión a la consola de control fue exitosa, cada uno de los semáforos mostrará el siguiente mensaje: 
-```c 
-    PID: <PID>
-    Enter the PID of the semaphore on the right: 
-```
-A partir de ese momento, cada uno de los semáforos esperará a que el usuario ingrese el PID del semáforo a su derecha.
-
-### 5. Conectar los semáforos entre sí
-<strong>Ingresar en cada semáforo el PID del semáforo a su derecha (para los semáforos que no reciben el argumento _-f_)</strong><br />
-El usuario deberá copiar y pegar en cada semáforo, uno a uno, el PID del semáforo a su derecha en el orden en que quiere que se comuniquen los semáforos. Al ingresar un PID, el semáforo indicará al usuario a qué PID le estará enviando las señales.
-
-<strong>Ingresar en el semáforo que recibe el argumento _-f_ el PID del semáforo a su derecha</strong><br />
-El <strong>último</strong> semáforo para el cual se debe ingresar el PID del semáforo a su derecha es aquél que recibe el argumento _-f_, ya que en el momento en que se presione la tecla `Enter`, comenzará la comunicación entre procesos.
-
-### 6. Interrumpir los semáforos desde la consola
-Una vez conectados los semáforos entre sí, el usuario podrá usar `Ctrl + C` y `Ctrl + Z` para cambiar el estado de los semáforos mediante interrupciones o para reestablecerlos al último estado en que se encontraban antes de ser interrumpidos.
+# Actividad 7: Sockets y señales
+### Instrucciones
+* Inicialmente se bloquearán todas las señales excepto la señal SIGALARM.
+* Mediante una función se debe comprobar si en el directorio actual existe un subdirectorio llamado “datos”. Si éste no existe, se deberá crear; en caso contrario, se borrarán todos los archivos que contenga.
+* El programa principal se encargará de instalar un gestor para la señal SIGALRM. 
+* A continuación, mediante un ciclo realizará  iteraciones, en cada una de las cuales:
+    * generará un nombre de archivo distinto (el primero de ellos “a0” , el siguiente “a1” y, así sucesivamente),
+    * abrirá dicho archivo dentro del subdirectorio “datos” (es obligatorio utilizar descriptores de archivos),
+    * establecerá un temporizador a t segundos, 
+    * y, finalmente, comenzará a escribir en el archivo recién creado el carácter “x” mientras una variable global (de nombre “grabar”) valga 1. 
+* Cuando el temporizador expire, se debe establecer la variable “grabar” a 0 y escribir en el archivo todas las señales que ha recibido el proceso y se encuentran pendiente por procesar y posteriormente cerrar el archivo. 
+* Por último, listar en pantalla los nombres de los archivo creados y el tamaño de cada uno. 
+* El número total de archivo a crear, así como el número de segundos que establece el temporizador, se pasarán como argumentos al programa.
+    -n : número de archivos 
+    -t : segundos del temporizador
