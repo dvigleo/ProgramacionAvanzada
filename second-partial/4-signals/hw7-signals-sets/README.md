@@ -1,4 +1,4 @@
-# Actividad 7: Sockets y señales
+# Actividad 7: Conjuntos de señales
 ### Instrucciones
 * Inicialmente se bloquearán todas las señales excepto la señal SIGALARM.
 * Mediante una función se debe comprobar si en el directorio actual existe un subdirectorio llamado “datos”. Si éste no existe, se deberá crear; en caso contrario, se borrarán todos los archivos que contenga.
