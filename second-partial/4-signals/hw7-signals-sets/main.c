@@ -1,3 +1,12 @@
+/*  Actividad 7: Conjuntos de señales
+    Curso: Programación avanzada
+    Profesor: Vicente Cubells Nonell
+    Autores:
+        Daniela Vignau León (A01021698)
+        Héctor Alexis Reyes Manrique (A01339607)
+    Fecha: 6 de octubre de 2020
+*/
+
 #include <ctype.h>
 #include <string.h>
 #include <stdio.h>
